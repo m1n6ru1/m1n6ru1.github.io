@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>vim on m1n6ru1 博客</title>
+        <link>https://m1n6ru1.github.io/tags/vim/</link>
+        <description>Recent content in vim on m1n6ru1 博客</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <lastBuildDate>Mon, 31 Oct 2022 20:21:36 +0000</lastBuildDate><atom:link href="https://m1n6ru1.github.io/tags/vim/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>网站信息泄露</title>
+        <link>https://m1n6ru1.github.io/post/%E7%BD%91%E7%AB%99%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/</link>
+        <pubDate>Mon, 31 Oct 2022 20:21:36 +0000</pubDate>
+        
+        <guid>https://m1n6ru1.github.io/post/%E7%BD%91%E7%AB%99%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/</guid>
+        <description>&lt;h2 id=&#34;vim缓存&#34;&gt;vim缓存&lt;/h2&gt;
+&lt;h3 id=&#34;vim临时文件&#34;&gt;vim临时文件&lt;/h3&gt;
+&lt;p&gt;目前主要的文本编辑软件都会有恢复的功能，当系统宕机时，可以通过特别的机制来恢复数据。vim就是通过缓存来恢复。&lt;/p&gt;
+&lt;p&gt;在vim的一般命令模式下按下ctrl-z键，vim会被放在后台执行。此时可以看到隐藏的缓存文件test.swp，当vim进程结束后，缓存文件会自动删除。&lt;/p&gt;
+&lt;p&gt;使用kill指令清除vim进程，模拟宕机的情况。 kill -9 表示强制杀死该进程。此时，由于vim的工作被不正常的中断，导致缓存文件不会被自动删除。再次打开test文件时会有警告。&lt;/p&gt;
+&lt;p&gt;如果实际出现上述警告，原因及解决方法如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;多人同时编辑：输入o，即只读。&lt;/li&gt;
+&lt;li&gt;不知名原因导致vim中断：输入r，恢复文件；再次打开时，输入d，删除缓存。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;当vim在编辑文档的过程中如果异常退出，则会产生缓存文件。第一次产生的缓存文件后缀为.swp，第二次则产生的缓存文件后缀为.swo,第三次产生的缓存文件后缀为.swn。&lt;/p&gt;
+&lt;p&gt;使用命令&lt;code&gt;vim -r&lt;/code&gt; 可以查看当前目录下的所有swp文件。&lt;/p&gt;
+&lt;p&gt;使用命令&lt;code&gt;vim -r filename&lt;/code&gt;可以恢复文件，这样上次意外退出并且没有保存的修改，就可以覆盖文件。&lt;/p&gt;
+&lt;p&gt;调用这类的隐藏文件的时候，需要在最前面加.(如删除index.php.swp，则需要&lt;code&gt;rm -fr* .index.php.swp&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;vim使用的缓存存储是一种固定的二进制文件，我们可以通过curl命令，或者vim命令进行查看。&lt;/p&gt;
+&lt;h3 id=&#34;vim备份文件&#34;&gt;vim备份文件&lt;/h3&gt;
+&lt;p&gt;默认情况下使用Vim编程，在修改文件后系统会自动生成一个带~的备份文件和带un~的操作记录文件（用于下次打开时撤销），某些情况下可以对其下载进行查看。&lt;/p&gt;
+&lt;p&gt;设置避免产生这两个文件的方法：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-vim&#34; data-lang=&#34;vim&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;set&lt;/span&gt; nobackup
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;set&lt;/span&gt; noundofile
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt; &lt;/p&gt;
+&lt;h2 id=&#34;ds_store文件&#34;&gt;.DS_Store文件&lt;/h2&gt;
+&lt;p&gt;.DS_Store 是 Mac OS 保存文件夹的自定义属性的隐藏文件。通过.DS_Store可以知道这个目录里面所有文件的清单。&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

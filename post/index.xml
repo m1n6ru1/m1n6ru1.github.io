@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Posts on m1n6ru1 博客</title>
+        <link>https://m1n6ru1.github.io/post/</link>
+        <description>Recent content in Posts on m1n6ru1 博客</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <lastBuildDate>Sat, 29 Jul 2023 12:55:41 +0000</lastBuildDate><atom:link href="https://m1n6ru1.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>防火墙技术</title>
+        <link>https://m1n6ru1.github.io/post/%E9%98%B2%E7%81%AB%E5%A2%99%E6%8A%80%E6%9C%AF/</link>
+        <pubDate>Sat, 29 Jul 2023 12:55:41 +0000</pubDate>
+        
+        <guid>https://m1n6ru1.github.io/post/%E9%98%B2%E7%81%AB%E5%A2%99%E6%8A%80%E6%9C%AF/</guid>
+        <description>&lt;h2 id=&#34;概述&#34;&gt;概述&lt;/h2&gt;
+&lt;p&gt;使用高速CPU、嵌入式系统、支持各种高速接口&lt;/p&gt;
+&lt;p&gt;特征：逻辑区域过滤器、隐藏内网网络结构、自身安全保障、主动防御攻击&lt;/p&gt;
+&lt;p&gt;功能：可以用于访问控制、身份验证、数据加密、VPN技术、地址转换&lt;/p&gt;
+&lt;p&gt;分类：&lt;/p&gt;
+&lt;p&gt;按物理形态：硬件、软件&lt;/p&gt;
+&lt;p&gt;按保护对象：单机、网络&lt;/p&gt;
+&lt;p&gt;按访问控制：包过滤、代理、状态检测&lt;/p&gt;
+&lt;p&gt;包过滤：简单便宜，只检测报文头部，逐包匹配导致效率低下。静态规则难以应付动态报文，ACL复杂后性能下降&lt;/p&gt;
+&lt;p&gt;代理：处理速度慢、升级困难因为要为所有协议进行代理开发而开发时间长&lt;/p&gt;
+&lt;p&gt;状态检测：安全策略检查，记录会话消息，考虑了前后报文连续性，处理后续包速度快，安全性高&lt;/p&gt;
+&lt;p&gt;组网方式：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/%e7%bb%84%e7%bd%91%e6%96%b9%e5%bc%8f1.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;组网方式1&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;只进行报文转发，不能进行路由寻址。必须处于同一个网段。处于2层（数据链路层），不能为接口进行IP配置。可以避免改变网络结构。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/%e7%bb%84%e7%bd%91%e6%96%b9%e5%bc%8f2.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;组网方式2&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;位于内外部网络之间，位于第3层（网络层）。需要配置分别配置成不同网段Ip地址。负责在内部网络和外部网络进行路由寻址，支持NAT、UTM等功能，需要修改网络拓扑。然而在采用路由模式时,网络管理员可能需要修改网络拓扑,例如,内部网络用户需要更改网关,或路由器需要更改路由配置等。注意需要考虑网络改造、业务中断等问题。&lt;/p&gt;
+&lt;h2 id=&#34;转发原理&#34;&gt;转发原理&lt;/h2&gt;
+&lt;h3 id=&#34;包过滤技术&#34;&gt;包过滤技术&lt;/h3&gt;
+&lt;p&gt;对于需要转发的数据包，先获取包头信息，然后和设定的规则进行比较，根据比较的结果对数据包进行转发或丢弃。&lt;/p&gt;
+&lt;p&gt;实现包过滤的核心技术是访问控制列表ACL。&lt;/p&gt;
+&lt;h3 id=&#34;防火墙安全策略&#34;&gt;防火墙安全策略&lt;/h3&gt;
+&lt;p&gt;按照一定规则控制设备对流量转发以及对流量进行内容安全一体化检测的策略。&lt;/p&gt;
+&lt;p&gt;规则的本质是包过滤。&lt;/p&gt;
+&lt;p&gt;作用既有对于跨防火墙的网络互访进行控制，又有对设备本身的访问进行控制。&lt;/p&gt;
+&lt;p&gt;原理是首先入数据流经过防火墙，接着查找防火墙安全策略并判断是否允许下一步操作，最后防火墙根据安全策略定义规则对于数据包进行处理。&lt;/p&gt;
+&lt;p&gt;根据定义的规则对于经过防火墙的流量进行筛选，并根据关键字确定筛选出的流量如何进行下一步操作。&lt;/p&gt;
+&lt;p&gt;关键字包括源地址、源区域、目的地址、目的区域、用户、服务和时间段等。&lt;/p&gt;
+&lt;h3 id=&#34;防火墙域间转发&#34;&gt;防火墙域间转发&lt;/h3&gt;
+&lt;p&gt;一般是检查IP的五元组（源IP、源端口、目的IP、目的端口、协议）判断一条数据流是否具有相同的数据报文。下一代防火墙还会检测用户、服务和时间段等。&lt;/p&gt;
+&lt;h5 id=&#34;查询和创建会话&#34;&gt;查询和创建会话&lt;/h5&gt;
+&lt;p&gt;查询会话表，如果匹配会话表，进行安全性检查，通过安全性检查后刷新会话表，转发报文。如果没有匹配，检查是否可以创建会话，包括查看Server Map表、查找路由表、查找包过滤规则和NAT，生成会话表并转发报文。&lt;/p&gt;
+&lt;h3 id=&#34;状态检测机制&#34;&gt;状态检测机制&lt;/h3&gt;
+&lt;p&gt;当状态检测机制开启时，只有首包通过设备才能建立表项，后续包直接匹配会话表项进行转发；当状态检测机制关闭时，即使首包没有经过设备，后续包只要通过设备也可以生成会话表项。例如，TCP报文的首包是SYN包。&lt;/p&gt;
+&lt;h3 id=&#34;查看会话表信息&#34;&gt;查看会话表信息&lt;/h3&gt;
+&lt;p&gt;显示会话表简要信息：&lt;code&gt;displayfirewall session table&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;主要显示了会话五元组。&lt;/p&gt;
+&lt;p&gt;显示会话表详细信息：&lt;code&gt;displayfirewall session table verbose&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;多了会话ID、TTL、下一条、接口名称、接口MAC地址、包的大小等。&lt;/p&gt;
+&lt;h2 id=&#34;安全策略的应用&#34;&gt;安全策略的应用&lt;/h2&gt;
+&lt;p&gt;条件：源安全区、目的安全区、源地址/地区、目的地址\地区、用户、服务、应用、时间段&lt;/p&gt;
+&lt;p&gt;动作：允许、禁止&lt;/p&gt;
+&lt;p&gt;内容安全配置文件（可选）：反病毒、入侵防御、URL过滤、文件过滤、内容过滤、应用行为控制、邮件过滤&lt;/p&gt;
+&lt;p&gt;对流量进行条件检查，然后执行允许或禁止的动作。根据各个配置文件进行检查来决定是否允许转发。&lt;/p&gt;
+&lt;h3 id=&#34;安全策略配置流程&#34;&gt;安全策略配置流程&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;配置安全区域（可选）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;配置接口&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;配置用户和认证（可选）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;配置对象（可选）
+配置地址和地址组
+地址是一个或若干个IPv4或IPv6或MAC地址，而地址组是地址的集合。只需定义一次，就可以被各种策略（安全策略、NAT策略等）多次引用。
+配置服务和服务组
+服务是通过协议类型和端口号来确定的应用协议类型，服务组是服务和服务组的集合。
+配置应用和应用组
+应用是指用来执行某一个特殊任务或用途的计算机程序，应用组是指多个应用的集合。
+配置时间段
+定义了时间范围，定义好的时间段被策略应用后，可以对某一时间段内流经防火墙的流量进行匹配和控制。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;定义安全配置文件（可选）&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;包括反病毒、入侵防御、URL过滤、文件过滤、内容过滤、应用行为控制、邮件过滤。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;配置安全策略&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;保存和提交配置&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>主机之间的通信方式</title>
+        <link>https://m1n6ru1.github.io/post/%E4%B8%BB%E6%9C%BA%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</link>
+        <pubDate>Fri, 21 Jul 2023 15:59:11 +0000</pubDate>
+        
+        <guid>https://m1n6ru1.github.io/post/%E4%B8%BB%E6%9C%BA%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</guid>
+        <description>&lt;h2 id=&#34;同步通信synchronous-communication&#34;&gt;同步通信（synchronous communication）&lt;/h2&gt;
+&lt;p&gt;在同步通信过程中，一方发送消息并阻塞以等待回复。这往往是最为简单的实现模式，而且只依靠阻塞I/O。然而，这可能需要超时机制以防某些错误意味着永远不会回复。&lt;/p&gt;
+&lt;h2 id=&#34;异步通信asynchronous-communication&#34;&gt;异步通信（Asynchronous communication）&lt;/h2&gt;
+&lt;p&gt;在异步通信过程中，一方发送消息，继续其它任务而不是等待回复。当回复最终到来时，它会被处理。这可能是在另一个线程来处理，或者通过中断当前的线程来处理。像这样的应用会更难构建，但是使用时会更加灵活。&lt;/p&gt;
+&lt;h2 id=&#34;流式通信stream-communication&#34;&gt;流式通信（Stream Communication）&lt;/h2&gt;
+&lt;p&gt;在流式通信中，一方发送连续的消息流。在线视频就是一个很好的例子。流式传输可能需要实时处理，可能会也可能不会容忍损失，并且可以
+单向或允许反向通信，如控制消息中所示。&lt;/p&gt;
+&lt;h2 id=&#34;发布订阅publishsubscribe&#34;&gt;发布/订阅（Publish/Subscribe）&lt;/h2&gt;
+&lt;p&gt;在发布/订阅系统中，各方订阅主题，其他人发布主题。这可以是小规模，也可以是大规模，正如推特所证明的那样。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>网站信息泄露</title>
+        <link>https://m1n6ru1.github.io/post/%E7%BD%91%E7%AB%99%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/</link>
+        <pubDate>Mon, 31 Oct 2022 20:21:36 +0000</pubDate>
+        
+        <guid>https://m1n6ru1.github.io/post/%E7%BD%91%E7%AB%99%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/</guid>
+        <description>&lt;h2 id=&#34;vim缓存&#34;&gt;vim缓存&lt;/h2&gt;
+&lt;h3 id=&#34;vim临时文件&#34;&gt;vim临时文件&lt;/h3&gt;
+&lt;p&gt;目前主要的文本编辑软件都会有恢复的功能，当系统宕机时，可以通过特别的机制来恢复数据。vim就是通过缓存来恢复。&lt;/p&gt;
+&lt;p&gt;在vim的一般命令模式下按下ctrl-z键，vim会被放在后台执行。此时可以看到隐藏的缓存文件test.swp，当vim进程结束后，缓存文件会自动删除。&lt;/p&gt;
+&lt;p&gt;使用kill指令清除vim进程，模拟宕机的情况。 kill -9 表示强制杀死该进程。此时，由于vim的工作被不正常的中断，导致缓存文件不会被自动删除。再次打开test文件时会有警告。&lt;/p&gt;
+&lt;p&gt;如果实际出现上述警告，原因及解决方法如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;多人同时编辑：输入o，即只读。&lt;/li&gt;
+&lt;li&gt;不知名原因导致vim中断：输入r，恢复文件；再次打开时，输入d，删除缓存。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;当vim在编辑文档的过程中如果异常退出，则会产生缓存文件。第一次产生的缓存文件后缀为.swp，第二次则产生的缓存文件后缀为.swo,第三次产生的缓存文件后缀为.swn。&lt;/p&gt;
+&lt;p&gt;使用命令&lt;code&gt;vim -r&lt;/code&gt; 可以查看当前目录下的所有swp文件。&lt;/p&gt;
+&lt;p&gt;使用命令&lt;code&gt;vim -r filename&lt;/code&gt;可以恢复文件，这样上次意外退出并且没有保存的修改，就可以覆盖文件。&lt;/p&gt;
+&lt;p&gt;调用这类的隐藏文件的时候，需要在最前面加.(如删除index.php.swp，则需要&lt;code&gt;rm -fr* .index.php.swp&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;vim使用的缓存存储是一种固定的二进制文件，我们可以通过curl命令，或者vim命令进行查看。&lt;/p&gt;
+&lt;h3 id=&#34;vim备份文件&#34;&gt;vim备份文件&lt;/h3&gt;
+&lt;p&gt;默认情况下使用Vim编程，在修改文件后系统会自动生成一个带~的备份文件和带un~的操作记录文件（用于下次打开时撤销），某些情况下可以对其下载进行查看。&lt;/p&gt;
+&lt;p&gt;设置避免产生这两个文件的方法：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-vim&#34; data-lang=&#34;vim&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;set&lt;/span&gt; nobackup
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;set&lt;/span&gt; noundofile
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt; &lt;/p&gt;
+&lt;h2 id=&#34;ds_store文件&#34;&gt;.DS_Store文件&lt;/h2&gt;
+&lt;p&gt;.DS_Store 是 Mac OS 保存文件夹的自定义属性的隐藏文件。通过.DS_Store可以知道这个目录里面所有文件的清单。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Windows上自行搭建PHP套件</title>
+        <link>https://m1n6ru1.github.io/post/windows%E4%B8%8A%E8%87%AA%E8%A1%8C%E6%90%AD%E5%BB%BAphp%E5%A5%97%E4%BB%B6/</link>
+        <pubDate>Tue, 02 Aug 2022 17:01:23 +0000</pubDate>
+        
+        <guid>https://m1n6ru1.github.io/post/windows%E4%B8%8A%E8%87%AA%E8%A1%8C%E6%90%AD%E5%BB%BAphp%E5%A5%97%E4%BB%B6/</guid>
+        <description>&lt;h3 id=&#34;安装mysql&#34;&gt;安装mysql&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;在官网下载mysql(mysql-8.0.29-winx64.zip)，解压文件夹，重命名为MySQL&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;新建一份my.ini配置文件&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;[mysqld]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 设置3306端口&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;port&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;3306&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 设置mysql的安装目录&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;basedir&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;xxx    &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 设置mysql数据库的数据的存放目录&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;datadir&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;xxx/data   # 此处同上&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 允许最大连接数&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;max_connections&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;1000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 服务端使用的字符集为utf8mb4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;character-set-server&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;utf8mb4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 创建新表时将使用的默认存储引擎&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;default-storage-engine&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;INNODB&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;[mysql]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 设置mysql客户端默认字符集为utf8mb4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;default-character-set&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;utf8mb4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;[client]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 设置mysql客户端连接服务端时默认使用的端口&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;port&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;3306&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其中xxx是MySQL文件夹所在绝对路径&lt;/p&gt;
+&lt;p&gt;在&lt;code&gt;mysql\bin&lt;/code&gt;目录下执行命令初始化&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bat&#34; data-lang=&#34;bat&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mysqld --initialize --console
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;并记住打印的临时密码&lt;/p&gt;
+&lt;p&gt;或者 &lt;code&gt;mysqld --initialize-insecure --console&lt;/code&gt;生成空密码&lt;/p&gt;
+&lt;h3 id=&#34;安装php&#34;&gt;安装php&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;在PHP官网上下载线程安全版本的PHP(php-7.4.30-Win32-vc15-x64.zip)，解压文件夹，重命名为PHP&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在PHP文件夹内复制一份php.ini-development，重命名为php.ini，作为php的配置文件&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;去掉extension_dir前的注释以及部分extension前的分号注释，以启用php拓展&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;安装apache&#34;&gt;安装apache&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;在官网下载apache(httpd-2.4.54-win64-VS16.zip)，解压文件夹，重命名为Apache24&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在Apache24文件夹以外某个地方新建一个WWW文件夹用于存放网页&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在&lt;code&gt;Apache24/conf&lt;/code&gt;文件夹下的httpd.conf文件中：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;找到&lt;code&gt;Define SRVROOT c:\apache&lt;/code&gt;，将其修改为Apache24文件夹所在路径&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;找到&lt;code&gt;DocumentRoot &amp;quot;${SRVROOT}/htdocs&lt;/code&gt;，将&lt;code&gt;${SRVROOT}/htdocs&lt;/code&gt;修改为WWW文件夹所在路径&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;找到&lt;code&gt;&amp;lt;Directory &amp;quot;${SRVROOT}/htdocs&amp;quot;&amp;gt;&lt;/code&gt;，将&lt;code&gt;${SRVROOT}/htdocs&lt;/code&gt;修改为WWW文件夹所在路径&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在&lt;code&gt;&amp;lt;IfModule dir_module&amp;gt;&lt;/code&gt;与&lt;code&gt;&amp;lt;/IfModule&amp;gt;&lt;/code&gt;之间添加如下几行：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  DirectoryIndex index.html index.php
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在&lt;code&gt;&amp;lt;IfModule mime_module&amp;gt;&lt;/code&gt;与&lt;code&gt;&amp;lt;/IfModule&amp;gt;&lt;/code&gt;之间添加如下几行：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  AddType application/x-httpd-php .php
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  AddType application/x-httpd-php .html
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  AddType application/x-httpd-php-source .phps
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;添加一行&lt;code&gt;PHPIniDir &amp;quot;xxx&amp;quot;&lt;/code&gt;,其中xxx是php.ini所在目录&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在&lt;!-- raw HTML omitted --&gt;&lt;code&gt;与&lt;/code&gt;&lt;!-- raw HTML omitted --&gt;之间修改&lt;code&gt;ScriptAlias /cgi-bin/&lt;/code&gt; 后的路径为&lt;code&gt;Apache24/cgi-bin/&lt;/code&gt;目录所在的计算机绝对路径&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;取消&lt;code&gt;LoadModule vhost_alias_module modules/mod_vhost_alias.so&lt;/code&gt;的注释以启用虚拟目录&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;取消&lt;code&gt;Include conf/extra/httpd-vhosts.conf&lt;/code&gt;前的注释&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;添加一行 &lt;code&gt;LoadModule php7_module &amp;quot;xxx&amp;quot;&lt;/code&gt;，xxx是php7apache2_4.dll的绝对路径&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在&lt;code&gt;Apache24\conf\extra&lt;/code&gt;文件夹下的httpd-vhosts.conf文件中添加：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;Directory &amp;#34;xxx&amp;#34;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Options Indexes FollowSymLinks
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    AllowOverride All
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Require all granted
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;/Directory&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;VirtualHost *:80&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ServerAdmin localhost
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    DocumentRoot &amp;#34;xxx&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;/VirtualHost&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中xxx是WWW文件夹所在绝对路径&lt;/p&gt;
+&lt;h3 id=&#34;配置环境变量&#34;&gt;配置环境变量&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;将&lt;code&gt;Apache24\bin&lt;/code&gt;、&lt;code&gt;PHP&lt;/code&gt;、&lt;code&gt;Mysql\bin&lt;/code&gt; 添加到系统环境变量中&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;以管理员身份注册apache和mysql服务&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bat&#34; data-lang=&#34;bat&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;httpd -k install 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mysqld --install 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+        </item>
+        <item>
+        <title>Docker的安装</title>
+        <link>https://m1n6ru1.github.io/post/docker%E7%9A%84%E5%AE%89%E8%A3%85/</link>
+        <pubDate>Mon, 25 Jul 2022 11:48:32 +0000</pubDate>
+        
+        <guid>https://m1n6ru1.github.io/post/docker%E7%9A%84%E5%AE%89%E8%A3%85/</guid>
+        <description>&lt;blockquote&gt;
+&lt;p&gt;操作系统版本:Kali 2022.2&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;通过apt下载docker并启动docker服务&#34;&gt;通过apt下载docker并启动docker服务&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt install -y docker.io
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl start docker
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;输入docker version查看docker的版本：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/%e7%89%88%e6%9c%ac.jpg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;版本&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;注意到这里只显示了Client的信息，下面有一个报错: persission denied&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这是因为我们安装的时候是用的sudo安装，普通用户没有权限连接docker的服务端。
+解决办法是把当前用户加入到docker组里面去。&lt;/p&gt;
+&lt;h3 id=&#34;添加当前用户到docker组并重启docker服务&#34;&gt;添加当前用户到docker组并重启docker服务&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo usermod -aG docker &lt;span style=&#34;color:#19177c&#34;&gt;$USER&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl daemon-reload
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl restart docker
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;第一次实际操作时我不小心敲成docker restart了&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;切换当前会话到docker组&#34;&gt;切换当前会话到docker组&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;newgrp - docker
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;安装完成&#34;&gt;安装完成&lt;/h3&gt;
+&lt;p&gt;再次输入docker version，正常显示完整信息：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/%e6%88%90%e5%8a%9f.jpg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;安装完成&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;后续步骤&#34;&gt;后续步骤&lt;/h3&gt;
+&lt;h4 id=&#34;docker国内镜像加速&#34;&gt;Docker国内镜像加速&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo vim /etc/docker/daemon.json
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;添加：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;registry-mirrors&amp;#34;&lt;/span&gt;:[
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;https://docker.1panel.live&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;设置开机启动docker&#34;&gt;设置开机启动Docker&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl &lt;span style=&#34;color:#008000&#34;&gt;enable&lt;/span&gt; docker
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+        </item>
+        <item>
+        <title>青海游记</title>
+        <link>https://m1n6ru1.github.io/post/%E9%9D%92%E6%B5%B7%E6%B8%B8%E8%AE%B0/</link>
+        <pubDate>Sat, 23 Jul 2022 18:53:55 +0000</pubDate>
+        
+        <guid>https://m1n6ru1.github.io/post/%E9%9D%92%E6%B5%B7%E6%B8%B8%E8%AE%B0/</guid>
+        <description>&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/route.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;路线图&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;2021年7月底，我们前往青海格尔木，目的是游览久负盛名的“甘青大环线”。&lt;/p&gt;
+&lt;p&gt;所谓“甘青大环线”,网上的解释是：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;甘青大环线位于甘肃、青海两省境内，泛指近年来因旅游形成的由甘肃兰州或青海 西宁出发，途径青海湖，门源，张掖，敦煌，格尔木大柴旦等地的旅游自驾环线。全程 长约4000公里，为最经典的西北7—15日旅游环线。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;而我们此行将主要探访位于柴达木盆地(Tsaidam Basin)深处的大柴旦、冷湖、茫崖地区。&lt;/p&gt;
+&lt;h3 id=&#34;启程&#34;&gt;启程&lt;/h3&gt;
+&lt;p&gt;7月26日上午，我们前往成都双流机场，下午将乘坐飞机经停西宁机场并最终抵达格尔木。由于天气原因飞机一度延误，下午两点半起飞。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/../img/airport.jpeg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;机场&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;第一天抵达高原&#34;&gt;第一天：抵达高原&lt;/h3&gt;
+&lt;p&gt;我们在傍晚时分抵达了这座位于柴达木盆地核心地带的高原城市，并且找到了预约好的租赁车。我们在商场购置了大量的食物和矿泉水，并在位于兴隆街的一家餐馆就餐。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/food.jpeg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;面条&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;我们吃了具有当地特色的面条、酸奶以及羊肉，之后马不停蹄在夜色下驱车前往锡铁山脚下的大柴旦。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/g315_1.jpeg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;沿路开始水草丰美&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;沿路开始水草丰美，但后来我们看到了盐湖和盐碱地，风沙也变得大了起来。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/g315_2.jpeg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;盐碱地&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;第二天漫游&#34;&gt;第二天：漫游&lt;/h3&gt;
+&lt;p&gt;我们抵达了大柴旦，并在一家旅馆落了脚。当地是高原，我感觉到了一丝高原反应的不适感，因此晚上睡不着，第二天挣扎着起来，困并且鼻子有点不舒服。我们上午前往“翡翠湖”游览，这是一片翠绿的盐湖。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/dcd_lake.jpeg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;大柴旦翡翠湖&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/dcd_lake2.jpeg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;大柴旦翡翠湖&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;下午我们抵达了南八仙地区，这里可以说是荒漠地带了，没有树木，只有连绵不绝的雅丹地貌(Yardang Landform)和尘土。我们路过一片美丽的盐湖，但是这里原本就是一家盐厂，无法进去。我们用无人机拍摄了几张照片之后离开了。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/nbx_yadan.jpeg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;南八仙&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;我们经过东台吉乃尔湖，看见湖水澄蓝，海鸥飞翔，自然美景令人流连忘返。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/east_lake.jpeg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;东台吉乃尔湖&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;我们抵达了据说是世界上唯一的水上雅丹地貌区–乌素特水上雅丹。水上雅丹让我想起了电视上见过的浙江千岛湖，一片一片的水上的突起陆地。但是不同的是这里是黄色的水上丘陵，风很大，还有海鸥在空中徘徊。水是蓝色的，向大海一样澄澈明净。&lt;/p&gt;
+&lt;p&gt;继续出发，我们路过了一段火星表面似的狭长地带，对面来车时，卷起了阵阵黄沙。不幸的是，我们发现路的尽头是一家商业营地，将我们和我们的酒店阻隔开了，于是有不得不返回。车里播放的音乐有一句歌词是“跑调的老歌”，显得非常苍凉。&lt;/p&gt;
+&lt;p&gt;我们终于抵达了老冷湖地区，当地有一片建筑物的废墟，历史上当地曾经有很多人为石油工业付出了青春和汗水。然后我们进入了一片宁静的小城，这里就是冷湖镇了。我们晚上在一家四川风格的餐厅吃了大盘鸡和炒苦瓜。&lt;/p&gt;
+&lt;p&gt;晚上我们住进了一家板房搭成的酒店，虽然条件上不如大柴旦的那一家，但是我明显感觉到更舒服和温馨了，因为酒店的拖鞋和我在家里穿的竟然一模一样。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/hotel.jpeg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;冷湖旅馆&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;第三天湖泊草原奇遇&#34;&gt;第三天：湖泊，草原，奇遇&lt;/h3&gt;
+&lt;p&gt;早上起来，我们驱车前往茫崖市，一路上依然是一片荒凉的景象，然后我们抵达了另一片盐湖，也叫“翡翠湖”，但是这里又是另一种景象。这里的泥土地是黄色的，而大柴旦翡翠湖地面则是黑色的；大柴旦盐湖颜色明艳而深刻，而这里的湖水颜色更加淡。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/mangai_lake.jpeg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;茫崖翡翠湖&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;无人机从天空中俯视湖面，湖底的碧绿便呈现在眼前。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/mangai_lake2.jpeg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;茫崖翡翠湖&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;简单地吃了自热米饭后，我们抵达了下榻的酒店，洗了洗澡，然后傍晚时分准备出发前往一个非常奇异的地方。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/prairie.jpeg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;草原&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;一路上我们的车颠来簸去地艰难行进着，然后我们惊奇的发现当地竟然出现了一大片草原！这是我们几天旅程中见到的少有的绿色植被了。然后我们抵达了目的地–艾肯泉。&lt;/p&gt;
+&lt;p&gt;艾肯泉具有“魔鬼之眼”(The devil’s eye)的称号，难怪这里的一切都是令人惊奇的。我们坐游览车进入景区深处，终于见到了这座奇异的泉水。它周围是棕褐色的土地，泉水从地下向四周喷涌。无人机在天空中为我们拍摄到它的全貌。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/aiken_spring.jpeg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;魔鬼之眼&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/aiken_spring2.jpeg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;魔鬼之眼&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;这时候发生了一件尴尬的事情，就是我们离开之后，我发现手机不见了，然后我们回去找。草原上蚊子很多，因此我们再回去的路上被咬得非常难受。所幸有善良的人见到了我的手机，约定好了地点，还给了我。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/kindness.jpeg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;帮助我的好人&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;我们回去之后，在一家餐厅吃了很多，主要有椒麻鸡、很宽的拌面条，血旺，以及一种当地特有的食物–椒蒿，拿来炒土豆丝。&lt;/p&gt;
+&lt;h3 id=&#34;第四天沙漠水上雅丹&#34;&gt;第四天：沙漠，水上雅丹&lt;/h3&gt;
+&lt;p&gt;第二天早上我吃了五个胡萝卜馅的包子以及一大碗黑米稀饭。然后我们继续行进，已经上午9点了，淡淡的月亮竟然仍然在天上。路过了一片沙漠，我们进去拍了照，沙地是非常难走的，我踩着其他人的脚印走了出去。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/desert.jpeg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;沙漠&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;下午我们决定离开这里，返回格尔木。中途我们又路过了水上雅丹，进去玩了一个下午。我渐渐克服了先前的恐惧，登上了一个半岛似的山丘，风景非常壮丽。当时的心情就像我国古代的曹操登临碣石一样：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;东临碣石，以观沧海。 水何澹澹，山岛竦峙。 树木丛生，百草丰茂。 秋风萧瑟，洪波涌起。 日月之行，若出其中。 星汉灿烂，若出其里。 幸甚至哉！歌以咏志。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/yadan.jpeg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;水上雅丹&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/yadan2.jpeg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;水上雅丹&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;我们临时改变返程的道路，在日暮的时候有幸路过了盐湖的一角，旁边屹立着一座刻有“盐海之上”字样的石碑。湖水富含卤素，因此在夕阳的余晖照耀之下显得格外美丽动人。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/saltlake.jpeg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;盐海之上&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;深夜我们去格尔木市区吃了一顿烧烤和炕锅羊肉，这时已经是凌晨了。返回酒店后，不必赶路的我们终于可以好好休息一宿。&lt;/p&gt;
+&lt;h3 id=&#34;第五天返程&#34;&gt;第五天：返程&lt;/h3&gt;
+&lt;p&gt;第二天中午，我们去当地的餐厅吃了一顿面条和羊肉，然后踏上了前往机场的道路。&lt;/p&gt;
+&lt;p&gt;我们的旅程结束了，星夜从万米高空的飞机上往下俯瞰的成都夜景是那样的壮丽而温馨。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/chengdu.jpeg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;成都夜景&#34;
+	
+	
+&gt;&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

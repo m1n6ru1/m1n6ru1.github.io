@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>linux on m1n6ru1 博客</title>
+        <link>https://m1n6ru1.github.io/tags/linux/</link>
+        <description>Recent content in linux on m1n6ru1 博客</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <lastBuildDate>Mon, 25 Jul 2022 11:48:32 +0000</lastBuildDate><atom:link href="https://m1n6ru1.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Docker的安装</title>
+        <link>https://m1n6ru1.github.io/post/docker%E7%9A%84%E5%AE%89%E8%A3%85/</link>
+        <pubDate>Mon, 25 Jul 2022 11:48:32 +0000</pubDate>
+        
+        <guid>https://m1n6ru1.github.io/post/docker%E7%9A%84%E5%AE%89%E8%A3%85/</guid>
+        <description>&lt;blockquote&gt;
+&lt;p&gt;操作系统版本:Kali 2022.2&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;通过apt下载docker并启动docker服务&#34;&gt;通过apt下载docker并启动docker服务&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt install -y docker.io
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl start docker
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;输入docker version查看docker的版本：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/%e7%89%88%e6%9c%ac.jpg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;版本&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;注意到这里只显示了Client的信息，下面有一个报错: persission denied&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这是因为我们安装的时候是用的sudo安装，普通用户没有权限连接docker的服务端。
+解决办法是把当前用户加入到docker组里面去。&lt;/p&gt;
+&lt;h3 id=&#34;添加当前用户到docker组并重启docker服务&#34;&gt;添加当前用户到docker组并重启docker服务&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo usermod -aG docker &lt;span style=&#34;color:#19177c&#34;&gt;$USER&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl daemon-reload
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl restart docker
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;第一次实际操作时我不小心敲成docker restart了&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;切换当前会话到docker组&#34;&gt;切换当前会话到docker组&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;newgrp - docker
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;安装完成&#34;&gt;安装完成&lt;/h3&gt;
+&lt;p&gt;再次输入docker version，正常显示完整信息：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/%e6%88%90%e5%8a%9f.jpg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;安装完成&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;后续步骤&#34;&gt;后续步骤&lt;/h3&gt;
+&lt;h4 id=&#34;docker国内镜像加速&#34;&gt;Docker国内镜像加速&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo vim /etc/docker/daemon.json
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;添加：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;registry-mirrors&amp;#34;&lt;/span&gt;:[
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;https://docker.1panel.live&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;设置开机启动docker&#34;&gt;设置开机启动Docker&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl &lt;span style=&#34;color:#008000&#34;&gt;enable&lt;/span&gt; docker
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

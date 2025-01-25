@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>计算机网络 on m1n6ru1 博客</title>
+        <link>https://m1n6ru1.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</link>
+        <description>Recent content in 计算机网络 on m1n6ru1 博客</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <lastBuildDate>Fri, 21 Jul 2023 15:59:11 +0000</lastBuildDate><atom:link href="https://m1n6ru1.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>主机之间的通信方式</title>
+        <link>https://m1n6ru1.github.io/post/%E4%B8%BB%E6%9C%BA%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</link>
+        <pubDate>Fri, 21 Jul 2023 15:59:11 +0000</pubDate>
+        
+        <guid>https://m1n6ru1.github.io/post/%E4%B8%BB%E6%9C%BA%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</guid>
+        <description>&lt;h2 id=&#34;同步通信synchronous-communication&#34;&gt;同步通信（synchronous communication）&lt;/h2&gt;
+&lt;p&gt;在同步通信过程中，一方发送消息并阻塞以等待回复。这往往是最为简单的实现模式，而且只依靠阻塞I/O。然而，这可能需要超时机制以防某些错误意味着永远不会回复。&lt;/p&gt;
+&lt;h2 id=&#34;异步通信asynchronous-communication&#34;&gt;异步通信（Asynchronous communication）&lt;/h2&gt;
+&lt;p&gt;在异步通信过程中，一方发送消息，继续其它任务而不是等待回复。当回复最终到来时，它会被处理。这可能是在另一个线程来处理，或者通过中断当前的线程来处理。像这样的应用会更难构建，但是使用时会更加灵活。&lt;/p&gt;
+&lt;h2 id=&#34;流式通信stream-communication&#34;&gt;流式通信（Stream Communication）&lt;/h2&gt;
+&lt;p&gt;在流式通信中，一方发送连续的消息流。在线视频就是一个很好的例子。流式传输可能需要实时处理，可能会也可能不会容忍损失，并且可以
+单向或允许反向通信，如控制消息中所示。&lt;/p&gt;
+&lt;h2 id=&#34;发布订阅publishsubscribe&#34;&gt;发布/订阅（Publish/Subscribe）&lt;/h2&gt;
+&lt;p&gt;在发布/订阅系统中，各方订阅主题，其他人发布主题。这可以是小规模，也可以是大规模，正如推特所证明的那样。&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

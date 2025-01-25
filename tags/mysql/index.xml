@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>mysql on m1n6ru1 博客</title>
+        <link>https://m1n6ru1.github.io/tags/mysql/</link>
+        <description>Recent content in mysql on m1n6ru1 博客</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <lastBuildDate>Tue, 02 Aug 2022 17:01:23 +0000</lastBuildDate><atom:link href="https://m1n6ru1.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Windows上自行搭建PHP套件</title>
+        <link>https://m1n6ru1.github.io/post/windows%E4%B8%8A%E8%87%AA%E8%A1%8C%E6%90%AD%E5%BB%BAphp%E5%A5%97%E4%BB%B6/</link>
+        <pubDate>Tue, 02 Aug 2022 17:01:23 +0000</pubDate>
+        
+        <guid>https://m1n6ru1.github.io/post/windows%E4%B8%8A%E8%87%AA%E8%A1%8C%E6%90%AD%E5%BB%BAphp%E5%A5%97%E4%BB%B6/</guid>
+        <description>&lt;h3 id=&#34;安装mysql&#34;&gt;安装mysql&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;在官网下载mysql(mysql-8.0.29-winx64.zip)，解压文件夹，重命名为MySQL&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;新建一份my.ini配置文件&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;[mysqld]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 设置3306端口&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;port&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;3306&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 设置mysql的安装目录&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;basedir&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;xxx    &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 设置mysql数据库的数据的存放目录&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;datadir&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;xxx/data   # 此处同上&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 允许最大连接数&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;max_connections&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;1000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 服务端使用的字符集为utf8mb4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;character-set-server&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;utf8mb4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 创建新表时将使用的默认存储引擎&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;default-storage-engine&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;INNODB&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;[mysql]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 设置mysql客户端默认字符集为utf8mb4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;default-character-set&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;utf8mb4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;[client]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 设置mysql客户端连接服务端时默认使用的端口&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;port&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;3306&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其中xxx是MySQL文件夹所在绝对路径&lt;/p&gt;
+&lt;p&gt;在&lt;code&gt;mysql\bin&lt;/code&gt;目录下执行命令初始化&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bat&#34; data-lang=&#34;bat&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mysqld --initialize --console
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;并记住打印的临时密码&lt;/p&gt;
+&lt;p&gt;或者 &lt;code&gt;mysqld --initialize-insecure --console&lt;/code&gt;生成空密码&lt;/p&gt;
+&lt;h3 id=&#34;安装php&#34;&gt;安装php&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;在PHP官网上下载线程安全版本的PHP(php-7.4.30-Win32-vc15-x64.zip)，解压文件夹，重命名为PHP&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在PHP文件夹内复制一份php.ini-development，重命名为php.ini，作为php的配置文件&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;去掉extension_dir前的注释以及部分extension前的分号注释，以启用php拓展&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;安装apache&#34;&gt;安装apache&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;在官网下载apache(httpd-2.4.54-win64-VS16.zip)，解压文件夹，重命名为Apache24&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在Apache24文件夹以外某个地方新建一个WWW文件夹用于存放网页&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在&lt;code&gt;Apache24/conf&lt;/code&gt;文件夹下的httpd.conf文件中：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;找到&lt;code&gt;Define SRVROOT c:\apache&lt;/code&gt;，将其修改为Apache24文件夹所在路径&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;找到&lt;code&gt;DocumentRoot &amp;quot;${SRVROOT}/htdocs&lt;/code&gt;，将&lt;code&gt;${SRVROOT}/htdocs&lt;/code&gt;修改为WWW文件夹所在路径&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;找到&lt;code&gt;&amp;lt;Directory &amp;quot;${SRVROOT}/htdocs&amp;quot;&amp;gt;&lt;/code&gt;，将&lt;code&gt;${SRVROOT}/htdocs&lt;/code&gt;修改为WWW文件夹所在路径&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在&lt;code&gt;&amp;lt;IfModule dir_module&amp;gt;&lt;/code&gt;与&lt;code&gt;&amp;lt;/IfModule&amp;gt;&lt;/code&gt;之间添加如下几行：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  DirectoryIndex index.html index.php
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在&lt;code&gt;&amp;lt;IfModule mime_module&amp;gt;&lt;/code&gt;与&lt;code&gt;&amp;lt;/IfModule&amp;gt;&lt;/code&gt;之间添加如下几行：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  AddType application/x-httpd-php .php
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  AddType application/x-httpd-php .html
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  AddType application/x-httpd-php-source .phps
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;添加一行&lt;code&gt;PHPIniDir &amp;quot;xxx&amp;quot;&lt;/code&gt;,其中xxx是php.ini所在目录&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在&lt;!-- raw HTML omitted --&gt;&lt;code&gt;与&lt;/code&gt;&lt;!-- raw HTML omitted --&gt;之间修改&lt;code&gt;ScriptAlias /cgi-bin/&lt;/code&gt; 后的路径为&lt;code&gt;Apache24/cgi-bin/&lt;/code&gt;目录所在的计算机绝对路径&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;取消&lt;code&gt;LoadModule vhost_alias_module modules/mod_vhost_alias.so&lt;/code&gt;的注释以启用虚拟目录&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;取消&lt;code&gt;Include conf/extra/httpd-vhosts.conf&lt;/code&gt;前的注释&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;添加一行 &lt;code&gt;LoadModule php7_module &amp;quot;xxx&amp;quot;&lt;/code&gt;，xxx是php7apache2_4.dll的绝对路径&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在&lt;code&gt;Apache24\conf\extra&lt;/code&gt;文件夹下的httpd-vhosts.conf文件中添加：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;Directory &amp;#34;xxx&amp;#34;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Options Indexes FollowSymLinks
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    AllowOverride All
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Require all granted
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;/Directory&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;VirtualHost *:80&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ServerAdmin localhost
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    DocumentRoot &amp;#34;xxx&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;/VirtualHost&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中xxx是WWW文件夹所在绝对路径&lt;/p&gt;
+&lt;h3 id=&#34;配置环境变量&#34;&gt;配置环境变量&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;将&lt;code&gt;Apache24\bin&lt;/code&gt;、&lt;code&gt;PHP&lt;/code&gt;、&lt;code&gt;Mysql\bin&lt;/code&gt; 添加到系统环境变量中&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;以管理员身份注册apache和mysql服务&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bat&#34; data-lang=&#34;bat&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;httpd -k install 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mysqld --install 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

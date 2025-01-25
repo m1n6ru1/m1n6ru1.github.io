@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='安装mysql 在官网下载mysql(mysql-8.0.29-winx64.zip)，解压文件夹，重命名为MySQL 新建一份my.ini配置'>
+<title>Windows上自行搭建PHP套件</title>
+
+<link rel='canonical' href='https://m1n6ru1.github.io/post/windows%E4%B8%8A%E8%87%AA%E8%A1%8C%E6%90%AD%E5%BB%BAphp%E5%A5%97%E4%BB%B6/'>
+
+<link rel="stylesheet" href="/scss/style.min.0107fcd95191056588ab1552296972694cdf1d995ccc9279480e10fe4650d786.css"><meta property='og:title' content='Windows上自行搭建PHP套件'>
+<meta property='og:description' content='安装mysql 在官网下载mysql(mysql-8.0.29-winx64.zip)，解压文件夹，重命名为MySQL 新建一份my.ini配置'>
+<meta property='og:url' content='https://m1n6ru1.github.io/post/windows%E4%B8%8A%E8%87%AA%E8%A1%8C%E6%90%AD%E5%BB%BAphp%E5%A5%97%E4%BB%B6/'>
+<meta property='og:site_name' content='m1n6ru1 博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='php' /><meta property='article:tag' content='mysql' /><meta property='article:tag' content='apache' /><meta property='article:tag' content='windows' /><meta property='article:published_time' content='2022-08-02T17:01:23&#43;00:00'/><meta property='article:modified_time' content='2022-08-02T17:01:23&#43;00:00'/>
+<meta name="twitter:title" content="Windows上自行搭建PHP套件">
+<meta name="twitter:description" content="安装mysql 在官网下载mysql(mysql-8.0.29-winx64.zip)，解压文件夹，重命名为MySQL 新建一份my.ini配置">
+    <link rel="shortcut icon" href="/facvion.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            localStorage.setItem(colorSchemeKey, "auto");
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky compact">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hucb51c994e4131b0d8272e90a76bd4dd9_445385_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">m1n6ru1 博客</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/tags/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-tag" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11 3L20 12a1.5 1.5 0 0 1 0 2L14 20a1.5 1.5 0 0 1 -2 0L3 11v-4a4 4 0 0 1 4 -4h4" />
+  <circle cx="9" cy="9" r="2" />
+</svg>
+
+
+
+                
+                <span>标签</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>链接</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+        </div>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#安装mysql">安装mysql</a></li>
+        <li><a href="#安装php">安装php</a></li>
+        <li><a href="#安装apache">安装apache</a></li>
+        <li><a href="#配置环境变量">配置环境变量</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E6%8A%80%E6%9C%AF/" style="background-color: #263e74; color: #fff;">
+                技术
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/windows%E4%B8%8A%E8%87%AA%E8%A1%8C%E6%90%AD%E5%BB%BAphp%E5%A5%97%E4%BB%B6/">Windows上自行搭建PHP套件</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2022-08-02</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 3 分钟
+                </time>
+            </div>
+        
+
+        
+        <div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-back" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"/>
+  <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon>
+</svg>
+            <time class="article-time--reading">
+                字数: 1293 字
+            </time>
+        </div>
+    
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h3 id="安装mysql">安装mysql</h3>
+<ul>
+<li>
+<p>在官网下载mysql(mysql-8.0.29-winx64.zip)，解压文件夹，重命名为MySQL</p>
+</li>
+<li>
+<p>新建一份my.ini配置文件</p>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">[mysqld]</span>
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># 设置3306端口</span>
+</span></span><span style="display:flex;"><span><span style="color:#7d9029">port</span><span style="color:#666">=</span><span style="color:#ba2121">3306</span>
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># 设置mysql的安装目录</span>
+</span></span><span style="display:flex;"><span><span style="color:#7d9029">basedir</span><span style="color:#666">=</span><span style="color:#ba2121">xxx    </span>
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># 设置mysql数据库的数据的存放目录</span>
+</span></span><span style="display:flex;"><span><span style="color:#7d9029">datadir</span><span style="color:#666">=</span><span style="color:#ba2121">xxx/data   # 此处同上</span>
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># 允许最大连接数</span>
+</span></span><span style="display:flex;"><span><span style="color:#7d9029">max_connections</span><span style="color:#666">=</span><span style="color:#ba2121">1000</span>
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># 服务端使用的字符集为utf8mb4</span>
+</span></span><span style="display:flex;"><span><span style="color:#7d9029">character-set-server</span><span style="color:#666">=</span><span style="color:#ba2121">utf8mb4</span>
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># 创建新表时将使用的默认存储引擎</span>
+</span></span><span style="display:flex;"><span><span style="color:#7d9029">default-storage-engine</span><span style="color:#666">=</span><span style="color:#ba2121">INNODB</span>
+</span></span><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">[mysql]</span>
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># 设置mysql客户端默认字符集为utf8mb4</span>
+</span></span><span style="display:flex;"><span><span style="color:#7d9029">default-character-set</span><span style="color:#666">=</span><span style="color:#ba2121">utf8mb4</span>
+</span></span><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">[client]</span>
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># 设置mysql客户端连接服务端时默认使用的端口</span>
+</span></span><span style="display:flex;"><span><span style="color:#7d9029">port</span><span style="color:#666">=</span><span style="color:#ba2121">3306</span>
+</span></span></code></pre></div></li>
+</ul>
+<p>其中xxx是MySQL文件夹所在绝对路径</p>
+<p>在<code>mysql\bin</code>目录下执行命令初始化</p>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bat" data-lang="bat"><span style="display:flex;"><span>mysqld --initialize --console
+</span></span></code></pre></div><p>并记住打印的临时密码</p>
+<p>或者 <code>mysqld --initialize-insecure --console</code>生成空密码</p>
+<h3 id="安装php">安装php</h3>
+<ul>
+<li>
+<p>在PHP官网上下载线程安全版本的PHP(php-7.4.30-Win32-vc15-x64.zip)，解压文件夹，重命名为PHP</p>
+</li>
+<li>
+<p>在PHP文件夹内复制一份php.ini-development，重命名为php.ini，作为php的配置文件</p>
+</li>
+<li>
+<p>去掉extension_dir前的注释以及部分extension前的分号注释，以启用php拓展</p>
+</li>
+</ul>
+<h3 id="安装apache">安装apache</h3>
+<ul>
+<li>
+<p>在官网下载apache(httpd-2.4.54-win64-VS16.zip)，解压文件夹，重命名为Apache24</p>
+</li>
+<li>
+<p>在Apache24文件夹以外某个地方新建一个WWW文件夹用于存放网页</p>
+</li>
+</ul>
+<p>在<code>Apache24/conf</code>文件夹下的httpd.conf文件中：</p>
+<ul>
+<li>
+<p>找到<code>Define SRVROOT c:\apache</code>，将其修改为Apache24文件夹所在路径</p>
+</li>
+<li>
+<p>找到<code>DocumentRoot &quot;${SRVROOT}/htdocs</code>，将<code>${SRVROOT}/htdocs</code>修改为WWW文件夹所在路径</p>
+</li>
+<li>
+<p>找到<code>&lt;Directory &quot;${SRVROOT}/htdocs&quot;&gt;</code>，将<code>${SRVROOT}/htdocs</code>修改为WWW文件夹所在路径</p>
+</li>
+<li>
+<p>在<code>&lt;IfModule dir_module&gt;</code>与<code>&lt;/IfModule&gt;</code>之间添加如下几行：</p>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>  DirectoryIndex index.html index.php
+</span></span></code></pre></div></li>
+<li>
+<p>在<code>&lt;IfModule mime_module&gt;</code>与<code>&lt;/IfModule&gt;</code>之间添加如下几行：</p>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>  AddType application/x-httpd-php .php
+</span></span><span style="display:flex;"><span>  AddType application/x-httpd-php .html
+</span></span><span style="display:flex;"><span>  AddType application/x-httpd-php-source .phps
+</span></span></code></pre></div></li>
+<li>
+<p>添加一行<code>PHPIniDir &quot;xxx&quot;</code>,其中xxx是php.ini所在目录</p>
+</li>
+<li>
+<p>在<!-- raw HTML omitted --><code>与</code><!-- raw HTML omitted -->之间修改<code>ScriptAlias /cgi-bin/</code> 后的路径为<code>Apache24/cgi-bin/</code>目录所在的计算机绝对路径</p>
+</li>
+<li>
+<p>取消<code>LoadModule vhost_alias_module modules/mod_vhost_alias.so</code>的注释以启用虚拟目录</p>
+</li>
+<li>
+<p>取消<code>Include conf/extra/httpd-vhosts.conf</code>前的注释</p>
+</li>
+<li>
+<p>添加一行 <code>LoadModule php7_module &quot;xxx&quot;</code>，xxx是php7apache2_4.dll的绝对路径</p>
+</li>
+</ul>
+<p>在<code>Apache24\conf\extra</code>文件夹下的httpd-vhosts.conf文件中添加：</p>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>&lt;Directory &#34;xxx&#34;&gt;
+</span></span><span style="display:flex;"><span>    Options Indexes FollowSymLinks
+</span></span><span style="display:flex;"><span>    AllowOverride All
+</span></span><span style="display:flex;"><span>    Require all granted
+</span></span><span style="display:flex;"><span>&lt;/Directory&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;VirtualHost *:80&gt;
+</span></span><span style="display:flex;"><span>    ServerAdmin localhost
+</span></span><span style="display:flex;"><span>    DocumentRoot &#34;xxx&#34;
+</span></span><span style="display:flex;"><span>&lt;/VirtualHost&gt;
+</span></span></code></pre></div><p>其中xxx是WWW文件夹所在绝对路径</p>
+<h3 id="配置环境变量">配置环境变量</h3>
+<ul>
+<li>
+<p>将<code>Apache24\bin</code>、<code>PHP</code>、<code>Mysql\bin</code> 添加到系统环境变量中</p>
+</li>
+<li>
+<p>以管理员身份注册apache和mysql服务</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bat" data-lang="bat"><span style="display:flex;"><span>httpd -k install 
+</span></span><span style="display:flex;"><span>mysqld --install 
+</span></span></code></pre></div>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/php/">php</a>
+        
+            <a href="/tags/mysql/">mysql</a>
+        
+            <a href="/tags/apache/">apache</a>
+        
+            <a href="/tags/windows/">windows</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.css"integrity="sha256-J&#43;iAE0sgH8QSz9hpcDxXIftnj65JEZgNhGcgReTTK9s="crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.js"integrity="sha256-InsNdER1b2xUewP&#43;pKCUJpkhiqwHgqiPXDlIk7GzBu4="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/contrib/auto-render.min.js"integrity="sha256-y39Mpg7V3D4lhBX4x6O0bUqTV4pSrfgwEfGKfxkOdgI="crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 m1n6ru1 博客
+    </section>
+    
+    <section class="powerby">
+        
+            天静伤鸿犹戢翼，月明惊鹊未安枝 <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
