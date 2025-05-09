@@ -6,7 +6,57 @@
         <description>Recent content in 技术 on m1n6ru1 博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <lastBuildDate>Sat, 29 Jul 2023 12:55:41 +0000</lastBuildDate><atom:link href="https://m1n6ru1.github.io/categories/%E6%8A%80%E6%9C%AF/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 09 May 2025 19:08:48 +0800</lastBuildDate><atom:link href="https://m1n6ru1.github.io/categories/%E6%8A%80%E6%9C%AF/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Kali存档签名密钥丢失</title>
+        <link>https://m1n6ru1.github.io/post/kali%E5%AD%98%E6%A1%A3%E7%AD%BE%E5%90%8D%E5%AF%86%E9%92%A5%E4%B8%A2%E5%A4%B1/</link>
+        <pubDate>Fri, 09 May 2025 19:08:48 +0800</pubDate>
+        
+        <guid>https://m1n6ru1.github.io/post/kali%E5%AD%98%E6%A1%A3%E7%AD%BE%E5%90%8D%E5%AF%86%E9%92%A5%E4%B8%A2%E5%A4%B1/</guid>
+        <description>&lt;h3 id=&#34;kali-linuxhttpszhidazhihucomsearchcontent_id257203600content_typearticlematch_order1qkalilinuxzhida_sourceentity重要通知必须手动更新仓库签名密钥&#34;&gt;&lt;a class=&#34;link&#34; href=&#34;https://zhida.zhihu.com/search?content_id=257203600&amp;amp;content_type=Article&amp;amp;match_order=1&amp;amp;q=Kali&amp;#43;Linux&amp;amp;zhida_source=entity&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Kali Linux&lt;/a&gt; 重要通知：必须手动更新仓库签名密钥&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;近期，Kali Linux 用户在尝试更新系统时（运行 &lt;code&gt;sudo apt update&lt;/code&gt;），可能会遇到签名验证错误，提示信息类似：
+Missing key 827C8569F2518CC677FECA1AED65462EC8D5E4C5, which is needed to verify signature.&lt;/p&gt;
+&lt;p&gt;或者
+OpenPGP signature verification failed: &amp;hellip; Missing key 827C8569F2518CC677FECA1AED65462EC8D5E4C5&amp;hellip;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;原因&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这是因为 Kali Linux 仓库更换了新的 &lt;a class=&#34;link&#34; href=&#34;https://zhida.zhihu.com/search?content_id=257203600&amp;amp;content_type=Article&amp;amp;match_order=1&amp;amp;q=GPG&amp;#43;%E7%AD%BE%E5%90%8D%E5%AF%86%E9%92%A5&amp;amp;zhida_source=entity&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GPG 签名密钥&lt;/a&gt;。旧密钥由于访问权限丢失（&lt;strong&gt;注意：并非泄露或被攻破&lt;/strong&gt;）而无法继续使用，因此启用了新的密钥来签署软件包仓库。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;需要采取的行动&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;为了能够继续正常更新 Kali 系统，&lt;strong&gt;所有用户都需要手动下载并安装新的仓库密钥环文件&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;操作步骤&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;打开终端。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;执行以下命令（使用 &lt;code&gt;wget&lt;/code&gt;）&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo wget https://archive.kali.org/archive-keyring.gpg -O /usr/share/keyrings/kali-archive-keyring.gpg
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;或者，如果你更喜欢使用 curl：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo curl https://archive.kali.org/archive-keyring.gpg -o /usr/share/keyrings/kali-archive-keyring.gpg
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;验证（推荐）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;为了确保下载的文件正确无误，可以执行以下命令校验其 &lt;a class=&#34;link&#34; href=&#34;https://zhida.zhihu.com/search?content_id=257203600&amp;amp;content_type=Article&amp;amp;match_order=1&amp;amp;q=SHA1&amp;#43;%E5%93%88%E5%B8%8C%E5%80%BC&amp;amp;zhida_source=entity&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;SHA1 哈希值&lt;/a&gt;：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sha1sum /usr/share/keyrings/kali-archive-keyring.gpg
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;预期输出应为： &lt;code&gt;603374c107a90a69d983dbcb4d31e0d6eedfc325 /usr/share/keyrings/kali-archive-keyring.gpg&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;密钥信息&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;新的密钥环文件包含了新的签名密钥（ID: &lt;code&gt;ED65462EC8D5E4C5&lt;/code&gt;，有效期至 2028年）和旧的签名密钥（ID: &lt;code&gt;ED444FF07D8D0BF6&lt;/code&gt;，有效期至 2027年）。&lt;/li&gt;
+&lt;li&gt;新密钥的真实性可以通过 Kali 团队开发者的签名进行验证（可在 Ubuntu 密钥服务器上查询）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;完成更新&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;安装新密钥后，再次运行 &lt;code&gt;sudo apt update&lt;/code&gt; 和 &lt;code&gt;sudo apt full-upgrade&lt;/code&gt; 即可正常更新系统。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;其他选项：全新安装&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对于计划进行全新安装的用户，所有官方 Kali 镜像（包括版本号为 &lt;code&gt;2025.1c&lt;/code&gt; 的镜像、&lt;code&gt;2025-W17&lt;/code&gt; 及之后的周构建版、&lt;a class=&#34;link&#34; href=&#34;https://zhida.zhihu.com/search?content_id=257203600&amp;amp;content_type=Article&amp;amp;match_order=1&amp;amp;q=NetHunter&amp;amp;zhida_source=entity&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;NetHunter&lt;/a&gt;、虚拟机、云平台、&lt;a class=&#34;link&#34; href=&#34;https://zhida.zhihu.com/search?content_id=257203600&amp;amp;content_type=Article&amp;amp;match_order=1&amp;amp;q=Docker&amp;amp;zhida_source=entity&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Docker&lt;/a&gt;、&lt;a class=&#34;link&#34; href=&#34;https://zhida.zhihu.com/search?content_id=257203600&amp;amp;content_type=Article&amp;amp;match_order=1&amp;amp;q=WSL&amp;amp;zhida_source=entity&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;WSL&lt;/a&gt; 等）均已更新，包含了新的密钥环文件。可以直接从 &lt;a class=&#34;link&#34; href=&#34;https://link.zhihu.com/?target=https%3A//www.kali.org/get-kali/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Get Kali&lt;/a&gt; 页面下载最新版本进行安装。&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>防火墙技术</title>
         <link>https://m1n6ru1.github.io/post/%E9%98%B2%E7%81%AB%E5%A2%99%E6%8A%80%E6%9C%AF/</link>
         <pubDate>Sat, 29 Jul 2023 12:55:41 +0000</pubDate>
