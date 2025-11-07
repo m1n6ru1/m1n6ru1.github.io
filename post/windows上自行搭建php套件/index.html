@@ -56,8 +56,8 @@
                     
                     
                         
-                        <img src="/img/avatar_hucb51c994e4131b0d8272e90a76bd4dd9_445385_300x0_resize_box_3.png" width="300"
-                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                        <img src="/img/avatar_hu749f6a060f0077b9882d77e3ba970e39_1875428_300x0_resize_box_3.png" width="300"
+                            height="279" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
                 </a>
@@ -305,7 +305,7 @@
   <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon>
 </svg>
             <time class="article-time--reading">
-                字数: 1293 字
+                字数: 1270 字
             </time>
         </div>
     
@@ -356,7 +356,7 @@
 <h3 id="安装php">安装php</h3>
 <ul>
 <li>
-<p>在PHP官网上下载线程安全版本的PHP(php-7.4.30-Win32-vc15-x64.zip)，解压文件夹，重命名为PHP</p>
+<p>在PHP官网上下载线程安全版本的PHP(php-8.4.14-Win32-vc17-x64.zip)，解压文件夹，重命名为PHP</p>
 </li>
 <li>
 <p>在PHP文件夹内复制一份php.ini-development，重命名为php.ini，作为php的配置文件</p>
@@ -368,7 +368,7 @@
 <h3 id="安装apache">安装apache</h3>
 <ul>
 <li>
-<p>在官网下载apache(httpd-2.4.54-win64-VS16.zip)，解压文件夹，重命名为Apache24</p>
+<p>在官网下载apache(httpd-2.4.65-win64-VS16.zip)，解压文件夹，重命名为Apache24</p>
 </li>
 <li>
 <p>在Apache24文件夹以外某个地方新建一个WWW文件夹用于存放网页</p>
@@ -386,6 +386,9 @@
 <p>找到<code>&lt;Directory &quot;${SRVROOT}/htdocs&quot;&gt;</code>，将<code>${SRVROOT}/htdocs</code>修改为WWW文件夹所在路径</p>
 </li>
 <li>
+<p>去除<code>ServerName</code>前的注释并修改为<code>127.0.0.1</code></p>
+</li>
+<li>
 <p>在<code>&lt;IfModule dir_module&gt;</code>与<code>&lt;/IfModule&gt;</code>之间添加如下几行：</p>
 <div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>  DirectoryIndex index.html index.php
 </span></span></code></pre></div></li>
@@ -399,16 +402,13 @@
 <p>添加一行<code>PHPIniDir &quot;xxx&quot;</code>,其中xxx是php.ini所在目录</p>
 </li>
 <li>
-<p>在<!-- raw HTML omitted --><code>与</code><!-- raw HTML omitted -->之间修改<code>ScriptAlias /cgi-bin/</code> 后的路径为<code>Apache24/cgi-bin/</code>目录所在的计算机绝对路径</p>
-</li>
-<li>
 <p>取消<code>LoadModule vhost_alias_module modules/mod_vhost_alias.so</code>的注释以启用虚拟目录</p>
 </li>
 <li>
 <p>取消<code>Include conf/extra/httpd-vhosts.conf</code>前的注释</p>
 </li>
 <li>
-<p>添加一行 <code>LoadModule php7_module &quot;xxx&quot;</code>，xxx是php7apache2_4.dll的绝对路径</p>
+<p>添加一行 <code>LoadModule php_module &quot;xxx&quot;</code>，xxx是php8apache2_4.dll的绝对路径</p>
 </li>
 </ul>
 <p>在<code>Apache24\conf\extra</code>文件夹下的httpd-vhosts.conf文件中添加：</p>

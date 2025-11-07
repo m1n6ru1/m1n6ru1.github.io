@@ -12,169 +12,41 @@
         <pubDate>Fri, 09 May 2025 19:08:48 +0800</pubDate>
         
         <guid>https://m1n6ru1.github.io/post/kali%E5%AD%98%E6%A1%A3%E7%AD%BE%E5%90%8D%E5%AF%86%E9%92%A5%E4%B8%A2%E5%A4%B1/</guid>
-        <description>&lt;h3 id=&#34;kali-linuxhttpszhidazhihucomsearchcontent_id257203600content_typearticlematch_order1qkalilinuxzhida_sourceentity重要通知必须手动更新仓库签名密钥&#34;&gt;&lt;a class=&#34;link&#34; href=&#34;https://zhida.zhihu.com/search?content_id=257203600&amp;amp;content_type=Article&amp;amp;match_order=1&amp;amp;q=Kali&amp;#43;Linux&amp;amp;zhida_source=entity&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Kali Linux&lt;/a&gt; 重要通知：必须手动更新仓库签名密钥&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;&lt;/p&gt;
+        <description>&lt;p&gt;Kali Linux重要通知：必须手动更新仓库签名密钥&lt;/p&gt;
+&lt;h3 id=&#34;摘要&#34;&gt;摘要&lt;/h3&gt;
 &lt;p&gt;近期，Kali Linux 用户在尝试更新系统时（运行 &lt;code&gt;sudo apt update&lt;/code&gt;），可能会遇到签名验证错误，提示信息类似：
 Missing key 827C8569F2518CC677FECA1AED65462EC8D5E4C5, which is needed to verify signature.&lt;/p&gt;
 &lt;p&gt;或者
 OpenPGP signature verification failed: &amp;hellip; Missing key 827C8569F2518CC677FECA1AED65462EC8D5E4C5&amp;hellip;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;原因&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&#34;原因&#34;&gt;原因&lt;/h3&gt;
 &lt;p&gt;这是因为 Kali Linux 仓库更换了新的 &lt;a class=&#34;link&#34; href=&#34;https://zhida.zhihu.com/search?content_id=257203600&amp;amp;content_type=Article&amp;amp;match_order=1&amp;amp;q=GPG&amp;#43;%E7%AD%BE%E5%90%8D%E5%AF%86%E9%92%A5&amp;amp;zhida_source=entity&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;GPG 签名密钥&lt;/a&gt;。旧密钥由于访问权限丢失（&lt;strong&gt;注意：并非泄露或被攻破&lt;/strong&gt;）而无法继续使用，因此启用了新的密钥来签署软件包仓库。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;需要采取的行动&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&#34;需要采取的行动&#34;&gt;需要采取的行动&lt;/h3&gt;
 &lt;p&gt;为了能够继续正常更新 Kali 系统，&lt;strong&gt;所有用户都需要手动下载并安装新的仓库密钥环文件&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;操作步骤&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&#34;操作步骤&#34;&gt;操作步骤&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;打开终端。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;执行以下命令（使用 &lt;code&gt;wget&lt;/code&gt;）&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo wget https://archive.kali.org/archive-keyring.gpg -O /usr/share/keyrings/kali-archive-keyring.gpg
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;或者，如果你更喜欢使用 curl：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   sudo wget https://archive.kali.org/archive-keyring.gpg -O /usr/share/keyrings/kali-archive-keyring.gpg
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;或者，如果你更喜欢使用 curl：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo curl https://archive.kali.org/archive-keyring.gpg -o /usr/share/keyrings/kali-archive-keyring.gpg
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;验证（推荐）&lt;/strong&gt;&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;验证推荐&#34;&gt;验证（推荐)&lt;/h3&gt;
 &lt;p&gt;为了确保下载的文件正确无误，可以执行以下命令校验其 &lt;a class=&#34;link&#34; href=&#34;https://zhida.zhihu.com/search?content_id=257203600&amp;amp;content_type=Article&amp;amp;match_order=1&amp;amp;q=SHA1&amp;#43;%E5%93%88%E5%B8%8C%E5%80%BC&amp;amp;zhida_source=entity&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;SHA1 哈希值&lt;/a&gt;：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sha1sum /usr/share/keyrings/kali-archive-keyring.gpg
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;预期输出应为： &lt;code&gt;603374c107a90a69d983dbcb4d31e0d6eedfc325 /usr/share/keyrings/kali-archive-keyring.gpg&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;密钥信息&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&#34;密钥信息&#34;&gt;密钥信息&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;新的密钥环文件包含了新的签名密钥（ID: &lt;code&gt;ED65462EC8D5E4C5&lt;/code&gt;，有效期至 2028年）和旧的签名密钥（ID: &lt;code&gt;ED444FF07D8D0BF6&lt;/code&gt;，有效期至 2027年）。&lt;/li&gt;
 &lt;li&gt;新密钥的真实性可以通过 Kali 团队开发者的签名进行验证（可在 Ubuntu 密钥服务器上查询）。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;完成更新&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&#34;完成更新&#34;&gt;完成更新&lt;/h3&gt;
 &lt;p&gt;安装新密钥后，再次运行 &lt;code&gt;sudo apt update&lt;/code&gt; 和 &lt;code&gt;sudo apt full-upgrade&lt;/code&gt; 即可正常更新系统。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;其他选项：全新安装&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;对于计划进行全新安装的用户，所有官方 Kali 镜像（包括版本号为 &lt;code&gt;2025.1c&lt;/code&gt; 的镜像、&lt;code&gt;2025-W17&lt;/code&gt; 及之后的周构建版、&lt;a class=&#34;link&#34; href=&#34;https://zhida.zhihu.com/search?content_id=257203600&amp;amp;content_type=Article&amp;amp;match_order=1&amp;amp;q=NetHunter&amp;amp;zhida_source=entity&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;NetHunter&lt;/a&gt;、虚拟机、云平台、&lt;a class=&#34;link&#34; href=&#34;https://zhida.zhihu.com/search?content_id=257203600&amp;amp;content_type=Article&amp;amp;match_order=1&amp;amp;q=Docker&amp;amp;zhida_source=entity&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Docker&lt;/a&gt;、&lt;a class=&#34;link&#34; href=&#34;https://zhida.zhihu.com/search?content_id=257203600&amp;amp;content_type=Article&amp;amp;match_order=1&amp;amp;q=WSL&amp;amp;zhida_source=entity&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;WSL&lt;/a&gt; 等）均已更新，包含了新的密钥环文件。可以直接从 &lt;a class=&#34;link&#34; href=&#34;https://link.zhihu.com/?target=https%3A//www.kali.org/get-kali/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Get Kali&lt;/a&gt; 页面下载最新版本进行安装。&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>防火墙技术</title>
-        <link>https://m1n6ru1.github.io/post/%E9%98%B2%E7%81%AB%E5%A2%99%E6%8A%80%E6%9C%AF/</link>
-        <pubDate>Sat, 29 Jul 2023 12:55:41 +0000</pubDate>
-        
-        <guid>https://m1n6ru1.github.io/post/%E9%98%B2%E7%81%AB%E5%A2%99%E6%8A%80%E6%9C%AF/</guid>
-        <description>&lt;h2 id=&#34;概述&#34;&gt;概述&lt;/h2&gt;
-&lt;p&gt;使用高速CPU、嵌入式系统、支持各种高速接口&lt;/p&gt;
-&lt;p&gt;特征：逻辑区域过滤器、隐藏内网网络结构、自身安全保障、主动防御攻击&lt;/p&gt;
-&lt;p&gt;功能：可以用于访问控制、身份验证、数据加密、VPN技术、地址转换&lt;/p&gt;
-&lt;p&gt;分类：&lt;/p&gt;
-&lt;p&gt;按物理形态：硬件、软件&lt;/p&gt;
-&lt;p&gt;按保护对象：单机、网络&lt;/p&gt;
-&lt;p&gt;按访问控制：包过滤、代理、状态检测&lt;/p&gt;
-&lt;p&gt;包过滤：简单便宜，只检测报文头部，逐包匹配导致效率低下。静态规则难以应付动态报文，ACL复杂后性能下降&lt;/p&gt;
-&lt;p&gt;代理：处理速度慢、升级困难因为要为所有协议进行代理开发而开发时间长&lt;/p&gt;
-&lt;p&gt;状态检测：安全策略检查，记录会话消息，考虑了前后报文连续性，处理后续包速度快，安全性高&lt;/p&gt;
-&lt;p&gt;组网方式：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/%e7%bb%84%e7%bd%91%e6%96%b9%e5%bc%8f1.png&#34;
-	
-	
-	
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;组网方式1&#34;
-	
-	
-&gt;&lt;/p&gt;
-&lt;p&gt;只进行报文转发，不能进行路由寻址。必须处于同一个网段。处于2层（数据链路层），不能为接口进行IP配置。可以避免改变网络结构。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://m1n6ru1.github.io/img/%e7%bb%84%e7%bd%91%e6%96%b9%e5%bc%8f2.png&#34;
-	
-	
-	
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;组网方式2&#34;
-	
-	
-&gt;&lt;/p&gt;
-&lt;p&gt;位于内外部网络之间，位于第3层（网络层）。需要配置分别配置成不同网段Ip地址。负责在内部网络和外部网络进行路由寻址，支持NAT、UTM等功能，需要修改网络拓扑。然而在采用路由模式时,网络管理员可能需要修改网络拓扑,例如,内部网络用户需要更改网关,或路由器需要更改路由配置等。注意需要考虑网络改造、业务中断等问题。&lt;/p&gt;
-&lt;h2 id=&#34;转发原理&#34;&gt;转发原理&lt;/h2&gt;
-&lt;h3 id=&#34;包过滤技术&#34;&gt;包过滤技术&lt;/h3&gt;
-&lt;p&gt;对于需要转发的数据包，先获取包头信息，然后和设定的规则进行比较，根据比较的结果对数据包进行转发或丢弃。&lt;/p&gt;
-&lt;p&gt;实现包过滤的核心技术是访问控制列表ACL。&lt;/p&gt;
-&lt;h3 id=&#34;防火墙安全策略&#34;&gt;防火墙安全策略&lt;/h3&gt;
-&lt;p&gt;按照一定规则控制设备对流量转发以及对流量进行内容安全一体化检测的策略。&lt;/p&gt;
-&lt;p&gt;规则的本质是包过滤。&lt;/p&gt;
-&lt;p&gt;作用既有对于跨防火墙的网络互访进行控制，又有对设备本身的访问进行控制。&lt;/p&gt;
-&lt;p&gt;原理是首先入数据流经过防火墙，接着查找防火墙安全策略并判断是否允许下一步操作，最后防火墙根据安全策略定义规则对于数据包进行处理。&lt;/p&gt;
-&lt;p&gt;根据定义的规则对于经过防火墙的流量进行筛选，并根据关键字确定筛选出的流量如何进行下一步操作。&lt;/p&gt;
-&lt;p&gt;关键字包括源地址、源区域、目的地址、目的区域、用户、服务和时间段等。&lt;/p&gt;
-&lt;h3 id=&#34;防火墙域间转发&#34;&gt;防火墙域间转发&lt;/h3&gt;
-&lt;p&gt;一般是检查IP的五元组（源IP、源端口、目的IP、目的端口、协议）判断一条数据流是否具有相同的数据报文。下一代防火墙还会检测用户、服务和时间段等。&lt;/p&gt;
-&lt;h5 id=&#34;查询和创建会话&#34;&gt;查询和创建会话&lt;/h5&gt;
-&lt;p&gt;查询会话表，如果匹配会话表，进行安全性检查，通过安全性检查后刷新会话表，转发报文。如果没有匹配，检查是否可以创建会话，包括查看Server Map表、查找路由表、查找包过滤规则和NAT，生成会话表并转发报文。&lt;/p&gt;
-&lt;h3 id=&#34;状态检测机制&#34;&gt;状态检测机制&lt;/h3&gt;
-&lt;p&gt;当状态检测机制开启时，只有首包通过设备才能建立表项，后续包直接匹配会话表项进行转发；当状态检测机制关闭时，即使首包没有经过设备，后续包只要通过设备也可以生成会话表项。例如，TCP报文的首包是SYN包。&lt;/p&gt;
-&lt;h3 id=&#34;查看会话表信息&#34;&gt;查看会话表信息&lt;/h3&gt;
-&lt;p&gt;显示会话表简要信息：&lt;code&gt;displayfirewall session table&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;主要显示了会话五元组。&lt;/p&gt;
-&lt;p&gt;显示会话表详细信息：&lt;code&gt;displayfirewall session table verbose&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;多了会话ID、TTL、下一条、接口名称、接口MAC地址、包的大小等。&lt;/p&gt;
-&lt;h2 id=&#34;安全策略的应用&#34;&gt;安全策略的应用&lt;/h2&gt;
-&lt;p&gt;条件：源安全区、目的安全区、源地址/地区、目的地址\地区、用户、服务、应用、时间段&lt;/p&gt;
-&lt;p&gt;动作：允许、禁止&lt;/p&gt;
-&lt;p&gt;内容安全配置文件（可选）：反病毒、入侵防御、URL过滤、文件过滤、内容过滤、应用行为控制、邮件过滤&lt;/p&gt;
-&lt;p&gt;对流量进行条件检查，然后执行允许或禁止的动作。根据各个配置文件进行检查来决定是否允许转发。&lt;/p&gt;
-&lt;h3 id=&#34;安全策略配置流程&#34;&gt;安全策略配置流程&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;配置安全区域（可选）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;配置接口&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;配置用户和认证（可选）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;配置对象（可选）
-配置地址和地址组
-地址是一个或若干个IPv4或IPv6或MAC地址，而地址组是地址的集合。只需定义一次，就可以被各种策略（安全策略、NAT策略等）多次引用。
-配置服务和服务组
-服务是通过协议类型和端口号来确定的应用协议类型，服务组是服务和服务组的集合。
-配置应用和应用组
-应用是指用来执行某一个特殊任务或用途的计算机程序，应用组是指多个应用的集合。
-配置时间段
-定义了时间范围，定义好的时间段被策略应用后，可以对某一时间段内流经防火墙的流量进行匹配和控制。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;定义安全配置文件（可选）&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;包括反病毒、入侵防御、URL过滤、文件过滤、内容过滤、应用行为控制、邮件过滤。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;配置安全策略&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;保存和提交配置&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        </item>
-        <item>
-        <title>主机之间的通信方式</title>
-        <link>https://m1n6ru1.github.io/post/%E4%B8%BB%E6%9C%BA%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</link>
-        <pubDate>Fri, 21 Jul 2023 15:59:11 +0000</pubDate>
-        
-        <guid>https://m1n6ru1.github.io/post/%E4%B8%BB%E6%9C%BA%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</guid>
-        <description>&lt;h2 id=&#34;同步通信synchronous-communication&#34;&gt;同步通信（synchronous communication）&lt;/h2&gt;
-&lt;p&gt;在同步通信过程中，一方发送消息并阻塞以等待回复。这往往是最为简单的实现模式，而且只依靠阻塞I/O。然而，这可能需要超时机制以防某些错误意味着永远不会回复。&lt;/p&gt;
-&lt;h2 id=&#34;异步通信asynchronous-communication&#34;&gt;异步通信（Asynchronous communication）&lt;/h2&gt;
-&lt;p&gt;在异步通信过程中，一方发送消息，继续其它任务而不是等待回复。当回复最终到来时，它会被处理。这可能是在另一个线程来处理，或者通过中断当前的线程来处理。像这样的应用会更难构建，但是使用时会更加灵活。&lt;/p&gt;
-&lt;h2 id=&#34;流式通信stream-communication&#34;&gt;流式通信（Stream Communication）&lt;/h2&gt;
-&lt;p&gt;在流式通信中，一方发送连续的消息流。在线视频就是一个很好的例子。流式传输可能需要实时处理，可能会也可能不会容忍损失，并且可以
-单向或允许反向通信，如控制消息中所示。&lt;/p&gt;
-&lt;h2 id=&#34;发布订阅publishsubscribe&#34;&gt;发布/订阅（Publish/Subscribe）&lt;/h2&gt;
-&lt;p&gt;在发布/订阅系统中，各方订阅主题，其他人发布主题。这可以是小规模，也可以是大规模，正如推特所证明的那样。&lt;/p&gt;
 </description>
         </item>
         <item>
@@ -250,7 +122,7 @@ OpenPGP signature verification failed: &amp;hellip; Missing key 827C8569F2518CC6
 &lt;h3 id=&#34;安装php&#34;&gt;安装php&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;在PHP官网上下载线程安全版本的PHP(php-7.4.30-Win32-vc15-x64.zip)，解压文件夹，重命名为PHP&lt;/p&gt;
+&lt;p&gt;在PHP官网上下载线程安全版本的PHP(php-8.4.14-Win32-vc17-x64.zip)，解压文件夹，重命名为PHP&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;在PHP文件夹内复制一份php.ini-development，重命名为php.ini，作为php的配置文件&lt;/p&gt;
@@ -262,7 +134,7 @@ OpenPGP signature verification failed: &amp;hellip; Missing key 827C8569F2518CC6
 &lt;h3 id=&#34;安装apache&#34;&gt;安装apache&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;在官网下载apache(httpd-2.4.54-win64-VS16.zip)，解压文件夹，重命名为Apache24&lt;/p&gt;
+&lt;p&gt;在官网下载apache(httpd-2.4.65-win64-VS16.zip)，解压文件夹，重命名为Apache24&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;在Apache24文件夹以外某个地方新建一个WWW文件夹用于存放网页&lt;/p&gt;
@@ -280,6 +152,9 @@ OpenPGP signature verification failed: &amp;hellip; Missing key 827C8569F2518CC6
 &lt;p&gt;找到&lt;code&gt;&amp;lt;Directory &amp;quot;${SRVROOT}/htdocs&amp;quot;&amp;gt;&lt;/code&gt;，将&lt;code&gt;${SRVROOT}/htdocs&lt;/code&gt;修改为WWW文件夹所在路径&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
+&lt;p&gt;去除&lt;code&gt;ServerName&lt;/code&gt;前的注释并修改为&lt;code&gt;127.0.0.1&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
 &lt;p&gt;在&lt;code&gt;&amp;lt;IfModule dir_module&amp;gt;&lt;/code&gt;与&lt;code&gt;&amp;lt;/IfModule&amp;gt;&lt;/code&gt;之间添加如下几行：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  DirectoryIndex index.html index.php
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
@@ -293,16 +168,13 @@ OpenPGP signature verification failed: &amp;hellip; Missing key 827C8569F2518CC6
 &lt;p&gt;添加一行&lt;code&gt;PHPIniDir &amp;quot;xxx&amp;quot;&lt;/code&gt;,其中xxx是php.ini所在目录&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;在&lt;!-- raw HTML omitted --&gt;&lt;code&gt;与&lt;/code&gt;&lt;!-- raw HTML omitted --&gt;之间修改&lt;code&gt;ScriptAlias /cgi-bin/&lt;/code&gt; 后的路径为&lt;code&gt;Apache24/cgi-bin/&lt;/code&gt;目录所在的计算机绝对路径&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
 &lt;p&gt;取消&lt;code&gt;LoadModule vhost_alias_module modules/mod_vhost_alias.so&lt;/code&gt;的注释以启用虚拟目录&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;取消&lt;code&gt;Include conf/extra/httpd-vhosts.conf&lt;/code&gt;前的注释&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;添加一行 &lt;code&gt;LoadModule php7_module &amp;quot;xxx&amp;quot;&lt;/code&gt;，xxx是php7apache2_4.dll的绝对路径&lt;/p&gt;
+&lt;p&gt;添加一行 &lt;code&gt;LoadModule php_module &amp;quot;xxx&amp;quot;&lt;/code&gt;，xxx是php8apache2_4.dll的绝对路径&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;在&lt;code&gt;Apache24\conf\extra&lt;/code&gt;文件夹下的httpd-vhosts.conf文件中添加：&lt;/p&gt;
